@@ -9,7 +9,7 @@ import java.sql.Time;
 
 /**
  *
- * @author Lotso <merengues.org>
+ * @author equipo Pocahontas
  */
 public class Boleto {
 
@@ -50,7 +50,7 @@ public class Boleto {
     }
 
     public void setId(String id) {
-        id = frb.getid().getText();
+        id = frb.getId().getText();
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class Boleto {
     }
 
     public void setPropietario(String propietario) {
-        propietario = frb.getPropiertario().getText();
+        propietario = frb.getPropietario().getText();
         this.propietario = propietario;
     }
 
