@@ -5,6 +5,9 @@
  */
 package estacionamiento;
 
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -12,6 +15,10 @@ import javax.swing.JTextField;
  * @author Lotso <merengues.org>
  */
 public class FrameBoleto extends javax.swing.JFrame {
+    
+    Boleto bol;
+    Boleto[] arrBoletos;
+    int contador = 0;
 
     /**
      * Creates new form FrameBoleto
@@ -22,6 +29,10 @@ public class FrameBoleto extends javax.swing.JFrame {
         Reloj hilo1 = new Reloj(lblHora1);
         hilo.start();
         hilo1.start();
+        arrBoletos = new Boleto[10];
+        lblHora.setForeground(Color.blue);
+        setHoraEntrada();
+        setHoraSalida();
     }
     
     public JTextField getId() {
@@ -44,12 +55,43 @@ public class FrameBoleto extends javax.swing.JFrame {
         return txtTrabajador;
     }
     
+    public JTextField setHoraEntrada() {
+        txtEntrada.setText(lblHora.getText());
+        return txtEntrada;
+    }
+    
+    public JTextField setHoraSalida() {
+        txtSalida.setText(lblHora1.getText());
+        return txtSalida;
+    }
+    
     public JTextField getHoraSalida() {
         return txtSalida;
     }
     
     public JTextField getHoraEntrada() {
         return txtEntrada;
+    }
+    
+    public Boleto[] getArreglo() {
+        return arrBoletos;
+    }
+    
+    public JTextField getTarifa() {
+        return txtTarifa;
+    }
+    
+    public void VER(String numId) {
+        Boleto[] arrTemp = getArreglo();
+        int num = Integer.parseInt(numId);
+        for (int i = 0; i < getContador(); i++) {
+            if (num == i) {
+                txtMarca1.setText(bol.getMarca());
+                txtMatricula1.setText(bol.getMatricula());
+                txtPropietario1.setText(bol.getPropietario());
+                txtTrabajador1.setText(bol.getTrabajador());
+            }
+        }
     }
 
     /**
@@ -79,9 +121,12 @@ public class FrameBoleto extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtSalida = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        btnregistrar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        txtTarifa = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jpanelVer = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        txtid1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtMatricula1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -95,6 +140,10 @@ public class FrameBoleto extends javax.swing.JFrame {
         txtEntrada1 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         txtSalida1 = new javax.swing.JTextField();
+        btnVer = new javax.swing.JButton();
+        txtid1 = new javax.swing.JTextField();
+        txtTarifa1 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -121,7 +170,7 @@ public class FrameBoleto extends javax.swing.JFrame {
 
         jLabel5.setText("Trabajador");
         jpanelRegistro.add(jLabel5);
-        jLabel5.setBounds(16, 204, 60, 16);
+        jLabel5.setBounds(20, 190, 60, 16);
 
         jLabel1.setText("ID");
         jpanelRegistro.add(jLabel1);
@@ -153,7 +202,7 @@ public class FrameBoleto extends javax.swing.JFrame {
         jpanelRegistro.add(jLabel4);
         jLabel4.setBounds(43, 109, 33, 16);
         jpanelRegistro.add(txtTrabajador);
-        txtTrabajador.setBounds(88, 198, 157, 28);
+        txtTrabajador.setBounds(90, 190, 157, 28);
 
         lblHora.setText("jLabel8");
         jpanelRegistro.add(lblHora);
@@ -171,6 +220,30 @@ public class FrameBoleto extends javax.swing.JFrame {
         jpanelRegistro.add(jLabel7);
         jLabel7.setBounds(259, 284, 67, 16);
 
+        btnregistrar.setText("registrar");
+        btnregistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregistrarActionPerformed(evt);
+            }
+        });
+        jpanelRegistro.add(btnregistrar);
+        btnregistrar.setBounds(150, 270, 90, 28);
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        jpanelRegistro.add(btnLimpiar);
+        btnLimpiar.setBounds(60, 270, 70, 28);
+        jpanelRegistro.add(txtTarifa);
+        txtTarifa.setBounds(90, 230, 150, 28);
+
+        jLabel16.setText("Tarifa");
+        jpanelRegistro.add(jLabel16);
+        jLabel16.setBounds(50, 230, 40, 16);
+
         jtabVer.addTab("Registro", jpanelRegistro);
 
         jpanelVer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -179,7 +252,6 @@ public class FrameBoleto extends javax.swing.JFrame {
 
         jLabel9.setText("Matricula");
 
-        txtMatricula1.setEditable(false);
         txtMatricula1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMatricula1ActionPerformed(evt);
@@ -198,6 +270,7 @@ public class FrameBoleto extends javax.swing.JFrame {
 
         txtTrabajador1.setEditable(false);
 
+        lblHora1.setFont(new java.awt.Font("Aharoni", 1, 14)); // NOI18N
         lblHora1.setText("jLabel8");
 
         jLabel13.setText("Hora entrada:");
@@ -208,20 +281,51 @@ public class FrameBoleto extends javax.swing.JFrame {
 
         txtSalida1.setEditable(false);
 
+        btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
+
+        txtid1.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
+        txtid1.setText("(Selecciona del 0 al 9)");
+        txtid1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtid1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtid1FocusLost(evt);
+            }
+        });
+
+        jLabel15.setText("Tarifa");
+
         javax.swing.GroupLayout jpanelVerLayout = new javax.swing.GroupLayout(jpanelVer);
         jpanelVer.setLayout(jpanelVerLayout);
         jpanelVerLayout.setHorizontalGroup(
             jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
+            .addGroup(jpanelVerLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel15)
+                .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpanelVerLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtid1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelVerLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtTarifa1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVer))
+                        .addGap(193, 193, 193))))
             .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jpanelVerLayout.createSequentialGroup()
                     .addGap(0, 18, Short.MAX_VALUE)
                     .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jpanelVerLayout.createSequentialGroup()
                             .addGap(48, 48, 48)
-                            .addComponent(jLabel8)
-                            .addGap(12, 12, 12)
-                            .addComponent(txtid1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8))
                         .addGroup(jpanelVerLayout.createSequentialGroup()
                             .addGap(11, 11, 11)
                             .addComponent(jLabel9)
@@ -256,16 +360,21 @@ public class FrameBoleto extends javax.swing.JFrame {
         );
         jpanelVerLayout.setVerticalGroup(
             jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelVerLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(txtid1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTarifa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addGap(23, 23, 23)
+                .addComponent(btnVer)
+                .addContainerGap())
             .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jpanelVerLayout.createSequentialGroup()
-                    .addGap(0, 12, Short.MAX_VALUE)
-                    .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpanelVerLayout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(jLabel8))
-                        .addComponent(txtid1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(15, 15, 15)
+                    .addGap(6, 18, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addGap(21, 21, 21)
                     .addGroup(jpanelVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jpanelVerLayout.createSequentialGroup()
                             .addGap(3, 3, 3)
@@ -373,24 +482,24 @@ public class FrameBoleto extends javax.swing.JFrame {
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jMenu3ActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jMenu4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-         jpanelRegistro.setVisible(true);
-         jpanelVer.setVisible(false);
+        jpanelRegistro.setVisible(true);
+        jpanelVer.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-         jpanelVer.setVisible(true);
-         jpanelRegistro.setVisible(false);
+        jpanelVer.setVisible(true);
+        jpanelRegistro.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void txtMatricula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatricula1ActionPerformed
@@ -400,6 +509,77 @@ public class FrameBoleto extends javax.swing.JFrame {
     private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMatriculaActionPerformed
+
+    private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
+        // TODO add your handling code here:
+
+        String id = txtid.getText();
+        String matricula = txtMatricula.getText();
+        String marca = txtMarca.getText();
+        String propietario = txtPropietario.getText();
+        String trabajador = txtTrabajador.getText();
+        String horaEnt = txtEntrada.getText();
+        String horaSalid = txtSalida.getText();
+        String tarifa = txtTarifa.getText();
+        arrBoletos[contador] = new Boleto(id, matricula, marca, propietario, trabajador, horaEnt, horaSalid, tarifa);
+        txtEntrada.setText(lblHora.getText());
+        txtSalida.setText(lblHora.getText());
+        contador++;
+        
+        for (int i = 0; i < arrBoletos.length; i++) {
+            System.out.println(arrBoletos[i]);
+        }
+    }//GEN-LAST:event_btnregistrarActionPerformed
+    
+    public int getContador() {
+        return contador;
+    }
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        // TODO add your handling code here:
+        String num = txtid1.getText();
+        String ID;
+//        int n = Integer.parseInt(num);
+
+        for (int i = 0; i < getContador(); i++) {
+            ID = arrBoletos[i].getId();
+            if (num.equals(ID)) {
+                txtMatricula1.setText(arrBoletos[i].getMatricula());
+                txtMarca1.setText(arrBoletos[i].getMarca());
+                txtPropietario1.setText(arrBoletos[i].getPropietario());
+                txtTrabajador1.setText(arrBoletos[i].getTrabajador());
+                txtEntrada1.setText(arrBoletos[i].getHoraEntrada());
+                txtSalida1.setText(arrBoletos[i].getHoraSalida());
+                txtTarifa1.setText(arrBoletos[i].getTarifa());
+            }
+        }
+        
+        txtEntrada1.setText(txtEntrada.getText());
+        txtSalida1.setText(txtSalida.getText());
+
+    }//GEN-LAST:event_btnVerActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+
+        txtid.setText(null);
+        txtMatricula.setText(null);
+        txtMarca.setText(null);
+        txtPropietario.setText(null);
+        txtTrabajador.setText(null);
+        txtEntrada.setText(null);
+        txtSalida.setText(null);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtid1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtid1FocusGained
+        // TODO add your handling code here:
+        txtid1.setText(null);
+    }//GEN-LAST:event_txtid1FocusGained
+
+    private void txtid1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtid1FocusLost
+        // TODO add your handling code here:
+//        txtid1.setText("(Selecciona del 0 al 9)");
+    }//GEN-LAST:event_txtid1FocusLost
 
     /**
      * @param args the command line arguments
@@ -431,22 +611,28 @@ public class FrameBoleto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 FrameBoleto fb = new FrameBoleto();
                 fb.setVisible(true);
                 fb.setLocationRelativeTo(null);
-                fb.setBounds(300, 300, 450, 450);
+                fb.setBounds(150, 150, 450, 450);
 //                fb.setResizable(false);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnVer;
+    private javax.swing.JButton btnregistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -484,6 +670,8 @@ public class FrameBoleto extends javax.swing.JFrame {
     private javax.swing.JTextField txtPropietario1;
     private javax.swing.JTextField txtSalida;
     private javax.swing.JTextField txtSalida1;
+    private javax.swing.JTextField txtTarifa;
+    private javax.swing.JTextField txtTarifa1;
     private javax.swing.JTextField txtTrabajador;
     private javax.swing.JTextField txtTrabajador1;
     private javax.swing.JTextField txtid;

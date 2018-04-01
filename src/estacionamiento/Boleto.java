@@ -6,6 +6,7 @@
 package estacionamiento;
 
 import java.sql.Time;
+import javax.swing.JLabel;
 
 /**
  *
@@ -20,13 +21,21 @@ public class Boleto {
     private String trabajador;
     private String horaEntrada;
     private String horaSalida;
+    private String tarifa;
     FrameBoleto frb;
 
     public Boleto() {
         frb = new FrameBoleto();
+        setId(frb.getId().getText());
+        setMatricula();
+        setMarca();
+        setPropietario();
+        setTrabajador();
+        setHoraEntrada();
+        setHoraSalida();
     }
 
-    public Boleto(String id, String matricula, String marca, String propietario, String trabajador, String horaEntrada, String horaSalida) {
+    public Boleto(String id, String matricula, String marca, String propietario, String trabajador, String horaEntrada, String horaSalida, String tarifa) {
         this.id = id;
         this.matricula = matricula;
         this.marca = marca;
@@ -34,15 +43,15 @@ public class Boleto {
         this.trabajador = trabajador;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
+        this.tarifa = tarifa;
     }
 
     public String getHoraSalida() {
         return horaSalida;
     }
 
-    public void setHoraSalida(String horaSalida) {
-        horaSalida = frb.getHoraSalida().getText();
-        this.horaSalida = horaSalida;
+    public void setHoraSalida() {
+        this.horaSalida = frb.getHoraSalida().getText();
     }
 
     public String getId() {
@@ -58,50 +67,53 @@ public class Boleto {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
-        matricula = frb.getMatricula().getText();
-        this.matricula = matricula;
+    public void setMatricula() {
+        this.matricula = frb.getMatricula().getText();
     }
 
     public String getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
-        marca = frb.getMarca().getText();
-        this.marca = marca;
+    public void setMarca() {
+        this.marca = frb.getMarca().getText();
     }
 
     public String getPropietario() {
         return propietario;
     }
 
-    public void setPropietario(String propietario) {
-        propietario = frb.getPropietario().getText();
-        this.propietario = propietario;
+    public void setPropietario() {
+        this.propietario = frb.getPropietario().getText();
     }
 
     public String getTrabajador() {
         return trabajador;
     }
 
-    public void setTrabajador(String trabajador) {
-        trabajador = frb.getTrabajador().getText();
-        this.trabajador = trabajador;
+    public void setTrabajador() {
+        this.trabajador = frb.getTrabajador().getText();
     }
 
     public String getHoraEntrada() {
         return horaEntrada;
     }
 
-    public void setHoraEntrada(String horaEntrada) {
-        horaEntrada = frb.getHoraEntrada().getText();
-        this.horaEntrada = horaEntrada;
+    public void setHoraEntrada() {
+        this.horaEntrada = frb.getHoraEntrada().getText();
+    }
+
+    public String getTarifa() {
+        return tarifa;
+    }
+
+    public void setTarifa(String tarifa) {
+        this.tarifa = frb.getTarifa().getText();
     }
 
     @Override
     public String toString() {
-        return "Boleto{" + "id=" + id + ", matricula=" + matricula + ", marca=" + marca + ", propietario=" + propietario + ", trabajador=" + trabajador + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + '}';
+        return "Boleto{" + "id=" + id + ", matricula=" + matricula + ", marca=" + marca + ", propietario=" + propietario + ", trabajador=" + trabajador + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", tarifa=" + tarifa + '}';
     }
 
 }
